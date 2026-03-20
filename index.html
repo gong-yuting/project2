@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Personal Portfolio · 学生作品集</title>
+  <style>
+    /* 全局重置与基调 */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: linear-gradient(145deg, #f4f7fc 0%, #e9eef5 100%);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.6;
+      color: #1e293b;
+      padding: 2rem 1.5rem;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* 主容器——温和的最大宽度与呼吸空间 */
+    .portfolio-wrapper {
+      max-width: 1280px;
+      width: 100%;
+    }
+
+    /* 页头区域 */
+    .page-header {
+      text-align: center;
+      margin-bottom: 3.5rem;
+    }
+
+    h1 {
+      font-size: 3rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      background: linear-gradient(135deg, #2d3a5e, #3e4e7a);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 0.6rem;
+      text-shadow: 0 2px 4px rgba(0,10,30,0.1);
+    }
+
+    .intro {
+      font-size: 1.25rem;
+      color: #475569;
+      max-width: 600px;
+      margin: 0 auto;
+      background: rgba(255,255,255,0.5);
+      backdrop-filter: blur(4px);
+      padding: 0.75rem 1.8rem;
+      border-radius: 60px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.02);
+      border: 1px solid rgba(255,255,255,0.6);
+    }
+
+    /* 项目网格 —— 响应式卡片墙 */
+    .project-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin: 2rem 0 3rem;
+    }
+
+    /* 卡片样式 (保留原始类名 .project-item，便于兼容) */
+    .project-item {
+      background: #ffffffdd;
+      backdrop-filter: blur(2px);
+      background: #ffffff;
+      border-radius: 32px;
+      box-shadow: 0 20px 35px -8px rgba(0, 20, 45, 0.15),
+                  0 0 0 1px rgba(156, 180, 215, 0.3) inset;
+      transition: transform 0.25s ease, box-shadow 0.35s ease;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden; /* 保证圆角裁边，同时图片可做悬停效果 */
+      border: 1px solid rgba(255,255,255,0.5);
+    }
+
+    .project-item:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 30px 45px -12px rgba(18, 52, 77, 0.25),
+                  0 0 0 1px rgba(99, 143, 199, 0.4) inset;
+    }
+
+    /* 卡片内图片：铺满宽度，保持比例，平滑过渡 */
+    .project-item img {
+      width: 100%;
+      height: 210px;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.4s ease;
+      border-bottom: 1px solid #eef2f6;
+    }
+
+    .project-item:hover img {
+      transform: scale(1.02);
+    }
+
+    /* 卡片文字内容区域（统一左右留白） */
+    .project-item h2 {
+      font-size: 1.7rem;
+      font-weight: 600;
+      margin: 1.2rem 1.8rem 0.4rem;
+      letter-spacing: -0.01em;
+      color: #1a2b3f;
+      line-height: 1.3;
+    }
+
+    .project-item p {
+      font-size: 1rem;
+      color: #4b5a6e;
+      margin: 0 1.8rem 1.2rem;
+      flex: 1; /* 将剩余空间推给p，让按钮保持在底部附近（如果内容少也没关系） */
+    }
+
+    /* 链接样式 —— 像精致的按钮 */
+    .project-item a {
+      display: inline-block;
+      background: #eef4ff;
+      color: #2d4b7c;
+      font-weight: 550;
+      font-size: 1rem;
+      padding: 0.7rem 1.8rem;
+      margin: 0 1.8rem 1.8rem 1.8rem;
+      border-radius: 40px;
+      text-decoration: none;
+      border: 1px solid #cdddec;
+      transition: background 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
+      align-self: flex-start;  /* 防止按钮拉伸 */
+      box-shadow: 0 4px 8px rgba(0, 35, 70, 0.05);
+    }
+
+    .project-item a:hover {
+      background: #2d4b7c;
+      color: white;
+      border-color: #2d4b7c;
+      box-shadow: 0 8px 16px -6px #2d4b7c80;
+    }
+
+    /* 页脚小彩蛋 —— 干净，谦逊 */
+    .footer-note {
+      text-align: center;
+      font-size: 0.95rem;
+      color: #62748c;
+      border-top: 1px dashed #b3c5d9;
+      padding-top: 2.2rem;
+      margin-top: 1rem;
+      display: flex;
+      justify-content: center;
+      gap: 1.8rem;
+      flex-wrap: wrap;
+    }
+
+    .footer-note span {
+      background: #e3eaf2;
+      padding: 0.2rem 1.2rem;
+      border-radius: 30px;
+      font-size: 0.9rem;
+      color: #2f405b;
+    }
+
+    .footer-note a {
+      color: #405e8c;
+      text-decoration: none;
+      border-bottom: 1px dotted #98aec6;
+    }
+
+    .footer-note a:hover {
+      color: #1d3557;
+      border-bottom: 1px solid #1d3557;
+    }
+
+    /* 小屏幕微调 */
+    @media (max-width: 600px) {
+      body { padding: 1.5rem 1rem; }
+      h1 { font-size: 2.4rem; }
+      .intro { font-size: 1.1rem; padding: 0.5rem 1rem; }
+      .project-item h2 { font-size: 1.5rem; margin: 1rem 1.2rem 0.3rem; }
+      .project-item p { margin: 0 1.2rem 0.8rem; }
+      .project-item a { margin: 0 1.2rem 1.2rem; padding: 0.6rem 1.4rem; }
+    }
+
+    /* 项目编号保留自然样式，同时保持美观 */
+    .project-item h2::first-line {
+      font-weight: 700; 
+    }
+
+    /* 微装饰: 卡片上的浅色光晕 */
+    .project-item::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      border-radius: 32px;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.7);
+      opacity: 0.6;
+    }
+
+    .project-item {
+      position: relative;
+    }
+
+    /* 保留原有图片alt不可见时的优雅降级 */
+  </style>
+</head>
+<body>
+  <div class="portfolio-wrapper">
+    <!-- 页头部分：保留原有文字，增加柔和背景 -->
+    <header class="page-header">
+      <h1>My Personal Portfolio</h1>
+      <p class="intro">I'm a college student learning web development. This is my simple project website.</p>
+    </header>
+
+    <!-- 项目卡片网格 —— 使用原类名 .project-item，图片已嵌入对应卡片内，并移除了原独立img标签 -->
+    <div class="project-grid">
+      <!-- 项目 1 : Movie Ranking -->
+      <div class="project-item">
+        <img src="https://tse3-mm.cn.bing.net/th/id/OIP-C.Y6a3zcd49y0Rl4Cd1jc9QQAAAA?w=208&h=158&c=7&r=0&o=7&dpr=1.3&pid=1.7&rm=3" 
+             alt="Movie Ranking Project collage">
+        <h2>1. Movie Ranking Project</h2>
+        <p>My top 3 favorite movies.</p>
+        <a href="movies.html">View Movie Ranking →</a>
+      </div>
+
+      <!-- 项目 2 : Birthday Invite -->
+      <div class="project-item">
+        <img src="https://tse4-mm.cn.bing.net/th/id/OIP-C.4J6AdxVx6VzK0q0BEynhEwHaFE?w=256&h=180&c=7&r=0&o=7&dpr=1.3&pid=1.7&rm=3" 
+             alt="Birthday Invite Project cake">
+        <h2>2. Birthday Invite Project</h2>
+        <p>A simple birthday invitation page.</p>
+        <a href="birthday.html">View Birthday Invite →</a>
+      </div>
+
+      <!-- 项目 3 : About Me (包含您原有的自我评价) -->
+      <div class="project-item">
+        <img src="https://tse2-mm.cn.bing.net/th/id/OIP-C.heNynYDvH5O7lcrHTePeUwHaHa?w=217&h=217&c=7&r=0&o=7&dpr=1.3&pid=1.7&rm=3" 
+             alt="About Me avatar">
+        <h2>3. About Me</h2>
+        <p>Basic information, my idol and self-evaluation.</p>
+        <a href="about me.html">Read About Me →</a>
+      </div>
+    </div>
+
+    <!-- 底部简洁信息，保持原风格 + 小趣味 (同时暗示更多项目) -->
+    <footer class="footer-note">
+      <span>✨ 学习旅程 · HTML/CSS 基础</span>
+      <span>📁 项目陆续上线中</span>
+      <span>✉️ <a href="#" onclick="alert('📬 感谢来访！你可以通过邮件联系我：student@example.com (示例)'); return false;">say hello</a></span>
+    </footer>
+  </div>
+
+  <!-- 注：所有图片与原链接一致，仅重新组织到卡片内。链接文件 (movies.html, birthday.html, about me.html) 保留原名，可正常跳转。 -->
+</body>
+</html>
